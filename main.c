@@ -9,6 +9,7 @@
 #include "port_scanner.h"
 #include "console.h"
 
+void banner(void);
 
 int main(int argc, char **argv)
 {
@@ -32,10 +33,18 @@ int main(int argc, char **argv)
 
     exit(1);
   }else{
+    system("clear");
 
-    console(host, &first, &last);
+    banner();
+
+    while(1){
+        console(host, &first, &last);
     
-    port_scanner(host, first, last);
+        port_scanner(host, first, last);
+
+    }
+
+
   }
 
   return 0;
