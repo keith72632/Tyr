@@ -21,15 +21,18 @@ void console(char *pHost, int *first, int *last){
     	scanf("%d", first);
     	printf("Enter PORT number you wish to end scanning at\n>");
     	scanf("%d", last);
+    	goto label;
 	} else if(strcmp(request, "sniff") == 0) {
 		printf("Packet sniffer coming soon\n");
 		goto label;
 	} else if(strcmp(request, "help") == 0){
 		printf("-scan:\n\tPerform network scan. When prompted, enter ip address and range of ports you wish to scan\n");
 		printf("-sniff:\n\tPacket sniffer\n");
-
-		printf("\n###################################################################################################\n");
+		printf("-quit:\n\tgive up\n");	
+		printf("\n#############################################################################################\n");
 		goto label;
+	} else if(strcmp(request, "quit") == 0){
+		exit(1);
 	}
 
 
