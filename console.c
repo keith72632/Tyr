@@ -2,16 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include "port_scanner.h"
+#include "packet_sniffer.h"
+#include "colors.h"
 
 #define LEN 10
 
 void console(char *pHost, int *first, int *last){
 
 	char *request = (char*)malloc(LEN);
+	char confirm;
 
 	printf("Welcome to Tyr. Enter command or type help for options\n");
 	label:
-		printf(">");
+		printf("%sTyr>%s", KRED, KWHT);
 		scanf("%s", request);
 
 	if(strcmp(request, "scan") == 0){
@@ -23,7 +26,7 @@ void console(char *pHost, int *first, int *last){
     	scanf("%d", last);
     	goto label;
 	} else if(strcmp(request, "sniff") == 0) {
-		printf("Packet sniffer coming soon\n");
+		sniff();
 		goto label;
 	} else if(strcmp(request, "help") == 0){
 		printf("-scan:\n\tPerform network scan. When prompted, enter ip address and range of ports you wish to scan\n");
@@ -32,7 +35,13 @@ void console(char *pHost, int *first, int *last){
 		printf("\n#############################################################################################\n");
 		goto label;
 	} else if(strcmp(request, "quit") == 0){
-		exit(1);
+		printf("Are you sure you want to quit?[y/n]\n");
+		scanf("%c", &confirm);
+		if(confirm == 'y'){
+			exit(1);
+		}else{
+			exit(1);
+		}
 	}
 
 
