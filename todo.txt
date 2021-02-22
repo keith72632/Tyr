@@ -1,0 +1,2 @@
+impliment global variables from init
+refine sniffer

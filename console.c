@@ -6,6 +6,10 @@
 #include "colors.h"
 
 #define LEN 10
+char global_ip[15] = {0};
+int global_start_port;
+int global_start_port = 0;
+int global_finish_port = 0;
 
 void console(char *pHost, int *first, int *last){
 
@@ -34,15 +38,23 @@ void console(char *pHost, int *first, int *last){
 		printf("-quit:\n\tgive up\n");	
 		printf("\n#############################################################################################\n");
 		goto label;
-	} else if(strcmp(request, "quit") == 0){
+	} else if(strcmp(request, "init") == 0){
+		printf("Enter target ip address:\n");
+		scanf("%s", global_ip);
+		printf("Enter starting port:\n");
+		scanf("%d", &global_start_port);
+		printf("Enter finishing port:\n");
+		scanf("%d", &global_finish_port);
+		printf("ip: %s\nstart: %d\nend: %d\n", global_ip, global_start_port, global_finish_port);
+		goto label;
+	}else if(strcmp(request, "quit") == 0){
 		printf("Are you sure you want to quit?[y/n]\n");
 		scanf("%c", &confirm);
-		if(confirm == 'y'){
+		if(confirm = getchar() == 'y'){
 			exit(1);
 		}else{
-			exit(1);
+			goto label;
 		}
 	}
-
-
 }
+
