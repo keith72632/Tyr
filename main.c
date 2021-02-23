@@ -10,6 +10,9 @@
 #include "console.h"
 
 void banner(void);
+extern char global_ip[15];
+extern int global_start_port;
+extern int global_finish_port;
 
 int main(int argc, char **argv)
 {
@@ -38,8 +41,7 @@ int main(int argc, char **argv)
     banner();
 
     while(1){
-        console(host, &first, &last);
-    
+        console(host, &first, &last);        
         port_scanner(host, first, last);
 
     }

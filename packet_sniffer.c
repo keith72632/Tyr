@@ -27,7 +27,7 @@ int sniff(void)
 {
 	int saddr_size, data_size;
 	struct sockaddr saddr;
-	struct in_addr in;
+	//struct in_addr in;
 
 	unsigned char *buffer = (unsigned char*)malloc(BUFF_SIZE);
 
@@ -36,25 +36,27 @@ int sniff(void)
 
 	printf("starting...\n");
 
-	//This creates raw socket that will sniff
+	//This creates raw socket that will sniff. Raw sockets are "connectionless" and only associate socket with address
 	sock_raw = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 	if(sock_raw < 0){
 		printf("Socket Error\n");
 		return 1;
 	}
-	printf("Socket success!\n");
+	printf("TCP Socket success! Must kill process with ctrl-c. Check log.txt in curret directory\n");
 	while(1){
 		saddr_size = sizeof(saddr);
-		//receive packet
-		data_size = recvfrom(sock_raw, buffer, BUFF_SIZE, 0, &saddr, &saddr_size);
+		//The recvfrom() function shall receive a message from a connection-mode or connectionless-mode socket. It is normally used 
+		//with connectionless-mode sockets because it permits the application to retrieve the source address of received data.
+		data_size = recvfrom(sock_raw, buffer, BUFF_SIZE, 0, &saddr, (socklen_t*)&saddr_size);
 		if(data_size < 0){
 			printf("Recvfrom error, failed to get packet\n");
 			return 1;
 		}
 		//Process packet
 		ProcessPacket(buffer, data_size);
+
 	}
-	fclose(sock_raw);
+	close(sock_raw);
 	printf("Finished\n");
 	return 0;
 }
@@ -89,10 +91,10 @@ void ProcessPacket(unsigned char *buffer, int size)
 
 void print_ip_header(unsigned char* Buffer, int size)
 {
-	unsigned short iphdrlen;
+	//unsigned short iphdrlen;
 
 	struct iphdr *iph = (struct iphdr *)Buffer;
-	iphdrlen = iph->ihl*4;
+	//iphdrlen = iph->ihl*4;
 
 	memset(&source, 0, sizeof(source));
 	source.sin_addr.s_addr = iph->saddr;

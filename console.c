@@ -4,10 +4,11 @@
 #include "port_scanner.h"
 #include "packet_sniffer.h"
 #include "colors.h"
+#include "console.h"
+#include "ping.h"
 
 #define LEN 10
-char global_ip[15] = {0};
-int global_start_port;
+char global_ip[15];
 int global_start_port = 0;
 int global_finish_port = 0;
 
@@ -28,13 +29,15 @@ void console(char *pHost, int *first, int *last){
     	scanf("%d", first);
     	printf("Enter PORT number you wish to end scanning at\n>");
     	scanf("%d", last);
-    	goto label;
+    	
 	} else if(strcmp(request, "sniff") == 0) {
 		sniff();
 		goto label;
 	} else if(strcmp(request, "help") == 0){
 		printf("-scan:\n\tPerform network scan. When prompted, enter ip address and range of ports you wish to scan\n");
 		printf("-sniff:\n\tPacket sniffer\n");
+		printf("-init:\n\tPrompted to initialize a global ip, starting port and finishing port\n");
+		printf("-showinfo:\n\tShow global varaibles\n");
 		printf("-quit:\n\tgive up\n");	
 		printf("\n#############################################################################################\n");
 		goto label;
@@ -47,10 +50,16 @@ void console(char *pHost, int *first, int *last){
 		scanf("%d", &global_finish_port);
 		printf("ip: %s\nstart: %d\nend: %d\n", global_ip, global_start_port, global_finish_port);
 		goto label;
+	} else if(strcmp(request, "showinfo")==0){
+		printf("ip: %s\nstart: %d\nend: %d\n", global_ip, global_start_port, global_finish_port);
+		goto label;
+	}else if(strcmp(request, "ping")==0){
+		ping();
+		goto label;
 	}else if(strcmp(request, "quit") == 0){
 		printf("Are you sure you want to quit?[y/n]\n");
 		scanf("%c", &confirm);
-		if(confirm = getchar() == 'y'){
+		if((confirm = getchar()) == 'y'){
 			exit(1);
 		}else{
 			goto label;
