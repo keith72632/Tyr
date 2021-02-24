@@ -44,18 +44,19 @@ int sniff(void)
 		printf("%sSocket Error. Try sudo%s\n", KRED, KWHT);
 		return 1;
 	}
-	printf("TCP Socket success! Must kill process with ctrl-c. Check log.txt in current directory\n");
+    system("clear");
+	printf("[+]TCP Socket success!\n*Must kill process with ctrl-c and reopen Tyr because I suck.\n*Check log.txt in current directory\n");
 	while(1){
 		saddr_size = sizeof(saddr);
 		//The recvfrom() function shall receive a message from a connection-mode or connectionless-mode socket. It is normally used 
 		//with connectionless-mode sockets because it permits the application to retrieve the source address of received data.
 		data_size = recvfrom(sock_raw, buffer, BUFF_SIZE, 0, &saddr, (socklen_t*)&saddr_size);
 		if(data_size < 0){
-			printf("Recvfrom error, failed to get packet\n");
+			printf("%sRecvfrom error, failed to get packet%s\n", KRED, KWHT);
 			return 1;
 		}
 		//Process packet
-		ProcessPacket(buffer, data_size);
+        ProcessPacket(buffer, data_size);
 	}
 	close(sock_raw);
 	printf("Finished\n");
