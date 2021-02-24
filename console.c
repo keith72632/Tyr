@@ -6,29 +6,35 @@
 #include "colors.h"
 #include "console.h"
 #include "ping.h"
+#include "log_search.h"
 
 #define LEN 10
 char global_ip[15];
 int global_start_port = 0;
 int global_finish_port = 0;
 
-void console(char *pHost, int *first, int *last){
+extern int first;
+extern int last;
+extern char host[16];
+
+void console(){
 
 	char *request = (char*)malloc(LEN);
 	char confirm;
 
 	printf("Welcome to Tyr. Enter command or type help for options\n");
 	label:
-		printf("%sTyr>%s", KRED, KWHT);
+		printf("%sTyr>%s", KCYN, KWHT);
 		scanf("%s", request);
 
 	if(strcmp(request, "scan") == 0){
 		printf("Enter IP address\n>");
-    	scanf("%s", pHost);
+    	scanf("%s", host);
     	printf("Enter PORT number you wish to begin scanning at\n>");
-    	scanf("%d", first);
+    	scanf("%d", &first);
     	printf("Enter PORT number you wish to end scanning at\n>");
-    	scanf("%d", last);
+    	scanf("%d", &last);
+    	port_scanner(host, first, last);
     	
 	} else if(strcmp(request, "sniff") == 0) {
 		sniff();
@@ -38,6 +44,7 @@ void console(char *pHost, int *first, int *last){
 		printf("-sniff:\n\tPacket sniffer\n");
 		printf("-init:\n\tPrompted to initialize a global ip, starting port and finishing port\n");
 		printf("-showinfo:\n\tShow global varaibles\n");
+		printf("-longsearch:\n\tThis will print the data from packet sniffer int the terminal. Heads up, it could be alot.\n");
 		printf("-quit:\n\tgive up\n");	
 		printf("\n#############################################################################################\n");
 		goto label;
@@ -55,6 +62,9 @@ void console(char *pHost, int *first, int *last){
 		goto label;
 	}else if(strcmp(request, "ping")==0){
 		ping();
+		goto label;
+	}else if(strcmp(request, "logsearch")==0){
+		log_search();
 		goto label;
 	}else if(strcmp(request, "quit") == 0){
 		printf("Are you sure you want to quit?[y/n]\n");

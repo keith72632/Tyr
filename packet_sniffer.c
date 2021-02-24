@@ -7,6 +7,8 @@
 #include<netinet/ip.h>	//Provides declarations for ip header
 #include<sys/socket.h>
 #include<arpa/inet.h>
+#include<unistd.h>
+#include "colors.h"
 
 #define BUFF_SIZE 65536
 
@@ -39,10 +41,10 @@ int sniff(void)
 	//This creates raw socket that will sniff. Raw sockets are "connectionless" and only associate socket with address
 	sock_raw = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 	if(sock_raw < 0){
-		printf("Socket Error\n");
+		printf("%sSocket Error. Try sudo%s\n", KRED, KWHT);
 		return 1;
 	}
-	printf("TCP Socket success! Must kill process with ctrl-c. Check log.txt in curret directory\n");
+	printf("TCP Socket success! Must kill process with ctrl-c. Check log.txt in current directory\n");
 	while(1){
 		saddr_size = sizeof(saddr);
 		//The recvfrom() function shall receive a message from a connection-mode or connectionless-mode socket. It is normally used 
@@ -54,7 +56,6 @@ int sniff(void)
 		}
 		//Process packet
 		ProcessPacket(buffer, data_size);
-
 	}
 	close(sock_raw);
 	printf("Finished\n");

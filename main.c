@@ -14,13 +14,14 @@ extern char global_ip[15];
 extern int global_start_port;
 extern int global_finish_port;
 
+char host[16] = {0};
+int first, last;
+
 int main(int argc, char **argv)
 {
 
-  char host[16] = {0};
   char first_port[6] = {0};
   char last_port[6] = {0};
-  int first, last;
 
   if(argc == 4){
      
@@ -41,9 +42,7 @@ int main(int argc, char **argv)
     banner();
 
     while(1){
-        console(host, &first, &last);        
-        port_scanner(host, first, last);
-
+        console();        
     }
 
 

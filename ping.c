@@ -26,7 +26,7 @@
 //timeout delay in seconds
 #define RECV_TIMEOUT 1
 
-//define the ping loop
+/*define the ping loop
 int pingloop=1; 
 
 struct ping_pkt
@@ -178,8 +178,30 @@ void send_ping(int ping_sockfd, struct sockaddr_in *ping_addr,
            ((msg_count - msg_received_count)/msg_count) * 100.0, 
           total_msec);  
 } 
-
+*/
 void ping()
 {
-	printf("ping\n");
+    /*
+    int sockfd;
+    char *ip_addr;
+    struct sockaddr_in addr_con;
+    int addrlen = sizeof(addr_con);
+    char net_buf[NI_MAXHOST];
+    */
+	printf("ping coming soon\n");
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

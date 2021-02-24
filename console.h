@@ -2,6 +2,6 @@
 #define CONSOLE_H_
 
 
-void console(char *pHost, int *first, int *last);
+void console(void);
 
 #endif 
