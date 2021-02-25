@@ -48,6 +48,7 @@ void console(){
 		printf("-sniff:\n\tPacket sniffer\n");
 		printf("-sniff_tcp:\n\tPacket sniffer that only picks up tcp traffic. stores in tcp_log.txt\n");
 		printf("-init:\n\tPrompted to initialize a global ip, starting port and finishing port\n");
+		printf("-server:\n\tLaunches a FTP server\n");
 		printf("-showinfo:\n\tShow global varaibles\n");
 		printf("-longsearch:\n\tThis will print the data from packet sniffer int the terminal. Heads up, it could be alot.\n");
 		printf("-quit:\n\tgive up\n");	
