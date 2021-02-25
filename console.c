@@ -7,6 +7,7 @@
 #include "console.h"
 #include "ping.h"
 #include "log_search.h"
+#include "tcp_packet_sniffer.h"
 
 #define LEN 10
 char global_ip[15];
@@ -36,12 +37,16 @@ void console(){
     	scanf("%d", &last);
     	port_scanner(host, first, last);
     	
-	} else if(strcmp(request, "sniff") == 0) {
+	} else if(strcmp(request, "sniff_tcp")==0){
+		sniff_tcp();
+		goto label;
+	}else if(strcmp(request, "sniff") == 0) {
 		sniff();
 		goto label;
 	} else if(strcmp(request, "help") == 0){
 		printf("-scan:\n\tPerform network scan. When prompted, enter ip address and range of ports you wish to scan\n");
 		printf("-sniff:\n\tPacket sniffer\n");
+		printf("-sniff_tcp:\n\tPacket sniffer that only picks up tcp traffic. stores in tcp_log.txt\n");
 		printf("-init:\n\tPrompted to initialize a global ip, starting port and finishing port\n");
 		printf("-showinfo:\n\tShow global varaibles\n");
 		printf("-longsearch:\n\tThis will print the data from packet sniffer int the terminal. Heads up, it could be alot.\n");

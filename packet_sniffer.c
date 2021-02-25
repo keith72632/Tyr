@@ -45,7 +45,7 @@ int sniff(void)
 		return 1;
 	}
     system("clear");
-	printf("[+]TCP Socket success!\n*Must kill process with ctrl-c and reopen Tyr because I suck.\n*Check log.txt in current directory\n");
+	printf("Socket success!\n*Must kill process with ctrl-c and reopen Tyr because I suck.\n*Check log.txt in current directory\n");
 	while(1){
 		saddr_size = sizeof(saddr);
 		//The recvfrom() function shall receive a message from a connection-mode or connectionless-mode socket. It is normally used 
