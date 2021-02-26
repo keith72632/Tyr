@@ -4,6 +4,7 @@ clean:
 	rm -rf tyr
 	rm -rf backup_log.txt
 	rm -rf tcp_backup_log.txt
+	rm -rf server_logs.txt
 	mv tcp_log.txt tcp_backup_log.txt
 	mv log.txt backup_log.txt
 run:

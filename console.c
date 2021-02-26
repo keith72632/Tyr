@@ -19,6 +19,9 @@ extern int first;
 extern int last;
 extern char host[16];
 
+//function from server.c
+void server_config(void);
+
 void console(){
 
 	char *request = (char*)malloc(LEN);
@@ -50,6 +53,7 @@ void console(){
 		printf("-sniff_tcp:\n\tPacket sniffer that only picks up tcp traffic. stores in tcp_log.txt\n");
 		printf("-init:\n\tPrompted to initialize a global ip, starting port and finishing port\n");
 		printf("-server:\n\tLaunches a FTP server\n");
+		printf("-server_conifg:\n\tPrints the content of the sever_config.tx file in terminal.\n");
 		printf("-showinfo:\n\tShow global varaibles\n");
 		printf("-longsearch:\n\tThis will print the data from packet sniffer int the terminal. Heads up, it could be alot.\n");
 		printf("-quit:\n\tgive up\n");	
@@ -72,6 +76,9 @@ void console(){
 		goto label;
 	}else if(strcmp(request, "server")==0){
 		server();
+		goto label;
+	}else if(strcmp(request, "server_config")==0){
+		server_config();
 		goto label;
 	}else if(strcmp(request, "logsearch")==0){
 		log_search();

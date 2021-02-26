@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <unistd.h>
+#include "colors.h"
 
 void port_scanner(char *hostname, int first, int last)
 {
@@ -25,7 +26,7 @@ void port_scanner(char *hostname, int first, int last)
     	sock = socket(AF_INET, SOCK_STREAM, 0);
 
         if(sock < 0){
-    	    perror("\nSocket");
+    	    perror("\n[x]Socket");
      	    exit(1);
         }
         //connect using this sock and socket address
@@ -37,22 +38,24 @@ void port_scanner(char *hostname, int first, int last)
          }
         //connected
         else {
-            printf("*****************************************************************\n");
-            printf("PORT: %-5d open\n", i);
-            printf("*****************************************************************\n");
+            system("clear");
+            printf("%s[+]%sScanning ports %d - %d\n", KGRN, KWHT, first, last);
+            printf("%s*****************************************************************%s\n", KCYN, KWHT);
+            printf("%s[+]%sPORT: %-5d open\n", KGRN, KWHT, i);
+            printf("%s*****************************************************************%s\n", KCYN, KWHT);
             counter++;
 
             if(i == 21 && err == 0){
-            printf("ftp open on port 21\n");
+            printf("%s[+]%sftp open on port 21\n", KGRN, KWHT);
             }
 
             if(i == 8080 && err == 0){
-            printf("http open on port 8080\n");
+            printf("%s[+]%sHttp open on port 8080\n", KGRN, KWHT);
             }
         }
         close(sock);
     }
-    printf("%d out of %d ports are open\n\n", counter, total);
+    printf("%s[+]%s%d out of %d ports are open\n\n", KGRN, KWHT, counter, total);
 
     fflush(stdout);
 }
