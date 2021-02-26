@@ -8,6 +8,7 @@
 #include "ping.h"
 #include "log_search.h"
 #include "tcp_packet_sniffer.h"
+#include "server.h"
 
 #define LEN 10
 char global_ip[15];
@@ -68,6 +69,9 @@ void console(){
 		goto label;
 	}else if(strcmp(request, "ping")==0){
 		ping();
+		goto label;
+	}else if(strcmp(request, "server")==0){
+		server();
 		goto label;
 	}else if(strcmp(request, "logsearch")==0){
 		log_search();
