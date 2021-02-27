@@ -8,14 +8,16 @@
 #include <sys/types.h>
 #include "colors.h"
 
-#define CONFIG_FILE "server_config.txt"
-#define HTML_FILE "index.html"
+#define CONFIG_FILE "Files/server_config.txt"
+#define HTML_FILE "Files/index.html"
 #define SIZE 11000
-#define SERVER_LOG "server_logs.txt"
+#define SERVER_LOG "Files/server_logs.txt"
 
 void prompt(char *ipAddr, int *port);
 int bind_socket(int sock, int port, char *ipAddr);
 int confirm_message(char *confirm, char *message);
+int send_message(int new_sock, char *message, struct sockaddr_in client);
+int recv_message(int new_sock, char *buffer, struct sockaddr_in client, char *lines);
 void send_html(int new_sock);
 int confirm_html(char *con_html);
 
@@ -30,8 +32,8 @@ void server(int argc, char **argv)
 	char *lines = "*****************************************************************";
 	char confirm[3];
 	char con_html[3];
-	char *buffer = (char *)malloc(255 * sizeof(char));
-	char *message = (char *)malloc(255 * sizeof(char));
+	char *buffer = (char *)malloc(SIZE * sizeof(char));
+	char *message = (char *)malloc(SIZE * sizeof(char));
 	FILE *fp = NULL;
 
 	prompt(ipAddr, ptr);
@@ -80,7 +82,7 @@ void server(int argc, char **argv)
 			fprintf(fp, "Socket accept unsuccessful\n");
 			exit(1);
 		}
-
+		printf("%s%s%s\n", KCYN, lines, KWHT);
 		printf("\n%s[+]%sSocket accept with %s successful!\n", KGRN, KWHT, inet_ntoa(client.sin_addr));
 		fprintf(fp, "\n[+]Socket accept with %s successful!\n", inet_ntoa(client.sin_addr));
 
@@ -89,16 +91,9 @@ void server(int argc, char **argv)
 			send_html(new_sock);
 		}
 
-		if(send(new_sock, message, 6, 0) < 0)
-			printf("%sMessage send failed%s\n", KRED, KWHT);
-		printf("%s[+]%sMessage to %s sent successfully\n%s%s%s\n\n", KGRN, KWHT, inet_ntoa(client.sin_addr), KCYN, lines, KWHT);
-
-		if(recv(new_sock, buffer, sizeof(buffer), 0) < 0){
-			printf("%sError in receiving data%s\n", KRED, KWHT);
-		}
-		printf("%s[+]%sMessage Received from %s\n",KGRN, KWHT, inet_ntoa(client.sin_addr));
-		printf("\t%sMessage: %s%s\n",KCYN, buffer, KWHT);
-		printf("%s%s%s\n", KCYN, lines, KWHT);
+		send_message(new_sock, message, client);
+	
+		recv_message(new_sock, buffer, client, lines);
 
 	}
 		fclose(fp);
@@ -179,6 +174,29 @@ int confirm_html(char *con_html)
 		return 0;
 	}
 
+}
+
+int send_message(int new_sock, char *message, struct sockaddr_in client)
+{
+	if(send(new_sock, message, sizeof(SIZE * sizeof(char)), 0) < 0){
+		printf("%s[x]%sError sending message", KRED, KWHT);
+		return -1;
+	}
+	printf("%s[+]%sMessage sent to %s\n", KGRN, KWHT, inet_ntoa(client.sin_addr));
+	printf("Message:\t%s\n", message);
+	return 0;
+}
+
+int recv_message(int new_sock, char *buffer, struct sockaddr_in client, char *lines)
+{
+		if(recv(new_sock, buffer, sizeof(buffer), 0) < 0){
+			printf("%sError in receiving data%s\n", KRED, KWHT);
+			return -1;
+		}
+		printf("%s[+]%sMessage Received from %s\n",KGRN, KWHT, inet_ntoa(client.sin_addr));
+		printf("\t%sMessage: %s%s\n",KCYN, buffer, KWHT);
+		printf("%s%s%s\n", KCYN, lines, KWHT);
+		return 0;
 }
 
 void send_html(int new_sock)

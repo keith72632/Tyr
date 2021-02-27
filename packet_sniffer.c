@@ -33,7 +33,7 @@ int sniff(void)
 
 	unsigned char *buffer = (unsigned char*)malloc(BUFF_SIZE);
 
-	logfile = fopen("log.txt", "w");
+	logfile = fopen("Files/log.txt", "w");
 	if(logfile == NULL) printf("Unable to create file\n");
 
 	printf("starting...\n");

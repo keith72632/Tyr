@@ -4,7 +4,7 @@
 
 #include "colors.h"
 
-#define FILE_NAME "log.txt"
+#define FILE_NAME "Files/log.txt"
 
 void log_search(void)
 {
