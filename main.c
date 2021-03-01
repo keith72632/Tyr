@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include "port_scanner.h"
 #include "console.h"
+#include "packet_sniffer.h"
+#include "server.h"
 
 void banner(void);
 extern char global_ip[15];
@@ -36,7 +38,11 @@ int main(int argc, char **argv)
     port_scanner(host, first, last);
 
     exit(1);
-  }else{
+  }else if(strcmp(argv[1], "sniff")==0){
+    sniff();
+  }else if(strcmp(argv[1], "server") == 0){
+    server();
+  } else{
     system("clear");
 
     banner();

@@ -106,8 +106,8 @@ void prompt(char *ipAddr, int *port)
 {
 	printf("Enter Ip Address of server or write local\n>");
 	scanf("%s", ipAddr);
-	if(strcmp(ipAddr, "") == 0)
-		ipAddr = "127.0.0.1";
+	if(strcmp(ipAddr, "local") == 0)
+		strcpy(ipAddr, "127.0.0.1");
 	printf("Enter port you wish to run server on\n>");
 	scanf("%d", port);
 	if(*port == 0){
