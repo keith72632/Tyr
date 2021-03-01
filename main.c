@@ -23,11 +23,11 @@ int main(int argc, char **argv)
   char first_port[6] = {0};
   char last_port[6] = {0};
 
-  if(argc == 4){
+  if(argc == 5 && strcmp(argv[1], "scan") == 0){
      
-    strcpy(host, argv[1]);
-    strcpy(first_port, argv[2]);
-    strcpy(last_port, argv[3]);
+    strcpy(host, argv[2]);
+    strcpy(first_port, argv[3]);
+    strcpy(last_port, argv[4]);
 
      //convert to int
     first = atoi(first_port);
