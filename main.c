@@ -38,11 +38,11 @@ int main(int argc, char **argv)
     port_scanner(host, first, last);
 
     exit(1);
-  }else if(strcmp(argv[1], "sniff")==0){
+  }else if(argc == 2 && strcmp(argv[1], "sniff")==0){
     sniff();
-  }else if(strcmp(argv[1], "server") == 0){
+  }else if(argc == 2 && strcmp(argv[1], "server") == 0){
     server();
-  } else{
+  } else {
     system("clear");
 
     banner();
